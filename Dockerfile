@@ -3,7 +3,6 @@ MAINTAINER Chris Stretton - https://github.com/cheezykins
 RUN a2enmod rewrite
 WORKDIR /var/www
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    git \
     libgmp10 \
     libgmp-dev \
     mysql-client \
