@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     /var/www/html/app/Users.php \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir /var/www/html/cachegrind \
+    && mkdir /var/www/html/public/cachegrind \
 	&& chown -R www-data:www-data /var/www/html \
 	&& sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/apache2/apache2.conf \
 	&& echo 'xdebug.profiler_output_dir = /var/www/html/public/cachegrind' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
