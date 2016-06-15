@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	&& sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/apache2/apache2.conf \
 	&& echo 'xdebug.profiler_output_dir = /var/www/html/public/cachegrind' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
 	&& echo 'xdebug.profiler_enable = 1' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo 'xdebug.profiler_output_name = cachegrind.%t.%R' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
 	&& echo 'Options +Indexes' > /var/www/html/public/cachegrind/.htaccess
 
 ONBUILD RUN composer self-update \
