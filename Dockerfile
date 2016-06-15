@@ -16,8 +16,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     pdo \
     pdo_mysql \
     zip \
-    && pecl install spl_types \
-    && docker-php-ext-enable spl_types \
+    && pecl install \
+    spl_types \
+    xdebug \
+    && docker-php-ext-enable spl_types xdebug \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer create-project \
     --no-ansi \
@@ -29,9 +31,13 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && rm -f /var/www/html/database/migrations/*.php \
     /var/www/html/app/Users.php \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-RUN chown -R www-data:www-data /var/www/html
-RUN sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/apache2/apache2.conf
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /var/www/html/cachegrind \
+	&& chown -R www-data:www-data /var/www/html \
+	&& sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/apache2/apache2.conf \
+	&& echo 'xdebug.profiler_output_dir = /var/www/html/cachegrind' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+	&& echo 'xdebug.profiler_enable = 1' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 ONBUILD RUN composer self-update \
         && cd /var/www/html \
         && composer update \
