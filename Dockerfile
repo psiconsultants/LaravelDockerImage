@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && mkdir /var/www/html/public/cachegrind \
 	&& chown -R www-data:www-data /var/www/html \
 	&& sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/apache2/apache2.conf \
+    && sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/sites-available/000-default.conf \
 	&& echo 'xdebug.profiler_output_dir = /var/www/html/public/cachegrind' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
 	&& echo 'xdebug.profiler_enable = 1' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo 'xdebug.profiler_output_name = cachegrind.%u.%R' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
