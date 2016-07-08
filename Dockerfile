@@ -1,12 +1,14 @@
 FROM php:5.6-apache
 MAINTAINER Chris Stretton - https://github.com/cheezykins
 RUN a2enmod rewrite
+COPY 010-default.conf /etc/apache2/sites-available
 WORKDIR /var/www
 RUN apt-get update && apt-get install --no-install-recommends -y \
     libgmp10 \
     libgmp-dev \
     mysql-client \
     zlib1g-dev \
+    && 
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
     && docker-php-ext-install -j$(nproc) \
     bcmath \
@@ -16,8 +18,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     pdo \
     pdo_mysql \
     zip \
-    && pecl install spl_types \
-    && docker-php-ext-enable spl_types \
+    && a2dissite 000-default \
+    && a2ensite 010-default \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer create-project \
     --no-ansi \
@@ -31,8 +33,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN chown -R www-data:www-data /var/www/html
-RUN sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/apache2/apache2.conf
-RUN sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/g' /etc/apache2/sites-available/000-default.conf
 ONBUILD RUN composer self-update \
         && cd /var/www/html \
         && composer update \
