@@ -6,12 +6,16 @@ WORKDIR /var/www
 RUN apt-get update && apt-get install --no-install-recommends -y \
     libgmp10 \
     libgmp-dev \
+    libldb-dev \
+    libldap2-dev \
     mysql-client \
     zlib1g-dev \
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
+    && ln -s /usr/lib/x86_64-linux-gnu/libld* /usr/lib/ \
     && docker-php-ext-install -j$(nproc) \
     bcmath \
     gmp \
+    ldap \
     mbstring \
     mysql \
     pdo \
