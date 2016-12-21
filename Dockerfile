@@ -77,6 +77,7 @@ RUN buildDeps='xz-utils' \
     && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
     && apt-get purge -y --auto-remove $buildDeps \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
+    && apt-get install npm
 
 CMD [ "node" ]
 
