@@ -1,5 +1,5 @@
 FROM php:5.6-apache
-MAINTAINER Chris Stretton - https://github.com/cheezykins
+MAINTAINER Pinnacle Solutions, Inc. - https://github.com/psiconsultants
 RUN a2enmod rewrite
 COPY 010-default.conf /etc/apache2/sites-available
 WORKDIR /var/www
