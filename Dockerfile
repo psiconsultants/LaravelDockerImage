@@ -65,8 +65,8 @@ RUN set -ex \
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 0.0.0
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-  && apt-get install -y nodejs bzip2
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+  && apt-get install -y nodejs bzip2 \
   && npm install -g gulp
 
 WORKDIR /var/www/html
