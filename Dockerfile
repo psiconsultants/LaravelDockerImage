@@ -66,7 +66,7 @@ ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 0.0.0
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
-  && apt-get install -y nodejs bzip2 \
+  && apt-get install -y nodejs bzip2 libfontconfig \
   && npm install -g gulp
 
 WORKDIR /var/www/html
